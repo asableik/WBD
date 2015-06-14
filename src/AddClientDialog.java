@@ -104,9 +104,19 @@ public class AddClientDialog extends AddPersonDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				int id = 0;
+				ResultSet count = sampleConnector.SelectMax("Esajur.Client","person_id");
+				try {
+					count.next();
+					id = count.getInt(1)+1;
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 				String table = "ESajur.Client";
 				String []values = {
-						""+i++,
+						""+id,
 						priceMinTF.getText(),
 						priceMaxTF.getText(),
 						""+stateCB.getSelectedIndex(),
@@ -182,8 +192,8 @@ public class AddClientDialog extends AddPersonDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				sampleConnector.Delete("Esajur.Client", "person_id", ""+personT.getValueAt(personT.getSelectedRow(),0));
+				populateTable();
 			}
 			
 		});

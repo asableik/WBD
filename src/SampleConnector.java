@@ -19,6 +19,24 @@ public class SampleConnector {
 	}
 	}
 	
+	
+	public ResultSet SelectMax(String table, String item){
+		Statement myStmt = null;
+		ResultSet myRs = null;
+		
+		try {
+			myStmt = dbConnection.createStatement();
+			System.out.println("SELECT max("+item+") FROM "+ table);
+			myRs= myStmt.executeQuery("SELECT max("+item+") FROM "+ table);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return myRs;
+		
+	}
+	
+	
+	
 	public ResultSet Select(String table, String[] itemsToSelect){
 		Statement myStmt = null;
 		ResultSet myRs = null;
@@ -32,11 +50,13 @@ public class SampleConnector {
 		return myRs;
 	}
 	
+	
+	
+	
 	public String toSqlStatement(String []values){
 		if(values[0].equals("*")) return "*";
 		StringBuilder builder = new StringBuilder();
 		builder.append("(");
-		//builder.append("'1',");
 		for(String s:values){
 			builder.append("'"+s+"',");
 		}
@@ -46,6 +66,10 @@ public class SampleConnector {
 		return builder.toString();
 		
 	}
+	
+	
+	
+	
 	public void Insert(String table, String []values){
 		Statement myStmt;
 		try {
@@ -53,6 +77,18 @@ public class SampleConnector {
 			System.out.println("INSERT INTO "+table+" VALUES "+toSqlStatement(values));
 			myStmt.executeUpdate("INSERT INTO "+table+" VALUES "+toSqlStatement(values));
 			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void Delete(String table,String valueName, String value){
+		Statement myStmt;
+		try {
+		myStmt = dbConnection.createStatement();
+		System.out.println("DELETE FROM "+table+" WHERE "+valueName+" = "+"'"+value+"'");
+		myStmt.executeUpdate("DELETE FROM "+table+" WHERE "+valueName+" = "+"'"+value+"'");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

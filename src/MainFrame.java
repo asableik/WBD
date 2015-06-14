@@ -25,7 +25,10 @@ public class MainFrame extends JFrame{
 	setLayout(new MigLayout());
 	JMenuBar menuBar  = new JMenuBar();
 	JMenu addMenu = new JMenu("Add...");
+	JMenu findMenu = new JMenu("Find...");
 	JMenuItem addClientMI = new JMenuItem("Client");
+	
+	
 	addClientMI.addActionListener(new ActionListener(){
 
 		@Override
@@ -36,8 +39,21 @@ public class MainFrame extends JFrame{
 		
 	});
 	
+	JMenuItem findProperty = new JMenuItem("Property");
+	findProperty.addActionListener(new ActionListener(){
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			new FindPropertyDialog(sampleConnector).setVisible(true);
+			
+		}
+		
+	});
+	
 	addMenu.add(addClientMI);
+	findMenu.add(findProperty);
 	menuBar.add(addMenu);
+	menuBar.add(findMenu);
 	this.add(menuBar,"pushx,growx,wrap");
 	this.pack();
 	

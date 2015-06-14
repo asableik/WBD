@@ -10,7 +10,7 @@ import javax.swing.AbstractButton;
 import javax.swing.ActionMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
+import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,12 +20,17 @@ import javax.swing.text.NumberFormatter;
 
 
 public class AddClientDialog extends AddPersonDialog {
-	JLabel priceMinL, priceMaxL, stateL, floorMinL, floorMaxL, sqmMinL,sqmMaxL;
+	JLabel priceMinL, priceMaxL, stateL, floorMinL, floorMaxL, sqmMinL,sqmMaxL,rentOrBuyL;
+	
 	JComboBox<String> stateCB;
-	JFormattedTextField priceMinTF, priceMaxTF, floorMinTF, floorMaxTF,sqmMinTF, sqmMaxTF;
+	JTextField priceMinTF, priceMaxTF, floorMinTF, floorMaxTF,sqmMinTF, sqmMaxTF;
 	JButton addB;
+	
 	JComboBox<String> updatePicker;
 	JTextField updateTextField;
+	
+	
+	JComboBox<String> rentOrBuyCB;
 	
 	int i = 3;
 	private JButton editB;
@@ -44,27 +49,35 @@ public class AddClientDialog extends AddPersonDialog {
 		
 		this.setTitle("Add Client");
 		priceMinL = new JLabel("Minimum price:");
-		priceMinTF = new JFormattedTextField(numberFormatter);
+		priceMinTF = new JTextField();
 		
 		priceMaxL = new JLabel("Maximum price:");
-		priceMaxTF = new JFormattedTextField(numberFormatter);
+		priceMaxTF = new JTextField();
+		
+		
+		String []rentOrBuyString  = {"Rent","Buy"};
+		rentOrBuyL = new JLabel("Rent or buy:");
+		rentOrBuyCB = new JComboBox<String>(rentOrBuyString);
+		rentOrBuyCB.setSelectedIndex(0);
 		
 		String []states = {"New","Aftermarket"};
 		stateL = new JLabel("State:");
 		stateCB = new JComboBox<String>(states);
 		stateCB.setSelectedIndex(0);
 		
+		
+		
 		floorMinL = new JLabel("Minimum floor:");
-		floorMinTF = new JFormattedTextField(numberFormatter);
+		floorMinTF = new JTextField();
 		
 		floorMaxL = new JLabel("Maximum floor:");
-		floorMaxTF = new JFormattedTextField(numberFormatter);
+		floorMaxTF = new JTextField();
 		
 		sqmMinL = new JLabel("Minimum SQM: ");
-		sqmMinTF = new JFormattedTextField(numberFormatter);
+		sqmMinTF = new JTextField();
 		
 		sqmMaxL = new JLabel("Maximum SQM: ");
-		sqmMaxTF = new JFormattedTextField(numberFormatter);
+		sqmMaxTF = new JTextField();
 		
 		personT = new JTable();
 		dtm = new DefaultTableModel(){
@@ -132,7 +145,8 @@ public class AddClientDialog extends AddPersonDialog {
 						lastNameTF.getText(),
 						datePicker.getModel().getValue().toString(),
 						phoneNumberTF.getText(),
-						emailAdressTF.getText(),			
+						emailAdressTF.getText(),
+						""+rentOrBuyCB.getSelectedIndex()
 			};
 				
 				sampleConnector.Insert(table, values);
@@ -211,6 +225,7 @@ public class AddClientDialog extends AddPersonDialog {
 				
 		};
 		updatePicker = new JComboBox<String>(updateValues);
+		updatePicker.setSelectedIndex(0);
 		
 		updateTextField = new JTextField();
 		
@@ -235,6 +250,9 @@ public class AddClientDialog extends AddPersonDialog {
 		
 		this.add(stateL);
 		this.add(stateCB,"growx,push,wrap");
+		
+		this.add(rentOrBuyL);
+		this.add(rentOrBuyCB,"growx,push,wrap");
 		
 		this.add(floorMinL);
 		this.add(floorMinTF,"growx,push,wrap");

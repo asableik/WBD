@@ -36,14 +36,33 @@ public class SampleConnector {
 	}
 	
 	
-	
+	public ResultSet SelectOffers(String personID){
+		Statement myStmt = null;
+		ResultSet myRs = null;
+		try {
+			myStmt = dbConnection.createStatement();
+			String statement = "SELECT * FROM Esajur.Client c, Esajur.Property p WHERE c.person_id = '"+personID+"' AND "
+																					 + "(p.price BETWEEN c.price_min AND c.price_max) AND"
+																					 + "(p.square_meters BETWEEN c.sqm_min AND c.sqm_max) AND"
+																					 + "(p.rent_or_buy = c.rent_or_buy) AND "
+																					 + "(p.property_type = c.state) AND"
+																					 + "(p.floor BETWEEN c.floor_min AND c.floor_max)";
+			System.out.println(statement);
+			myRs= myStmt.executeQuery(statement);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return myRs;
+	}
 	public ResultSet Select(String table, String[] itemsToSelect){
 		Statement myStmt = null;
 		ResultSet myRs = null;
 		try {
 			myStmt = dbConnection.createStatement();
-			System.out.println("SELECT "+toSqlStatement(itemsToSelect)+" FROM "+ table);
-			myRs= myStmt.executeQuery("SELECT "+toSqlStatement(itemsToSelect)+" FROM "+ table);
+			String statement ="SELECT "+toSqlStatement(itemsToSelect)+" FROM "+ table;
+			System.out.println(statement);
+			myRs= myStmt.executeQuery(statement);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

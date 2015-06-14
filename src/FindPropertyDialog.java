@@ -78,6 +78,7 @@ public class FindPropertyDialog extends JDialog{
 			"Type",
 			"Price",
 			"Adress",
+			"Floor",
 			"Number of rooms",
 			"Number of floors",
 			"Square meters",
@@ -123,6 +124,7 @@ public class FindPropertyDialog extends JDialog{
 							rs.getString("property_type"),		//type
 							rs.getString("price"),
 							rs.getString("city_name")+" "+rs.getString("street_name")+" "+rs.getString("house_number")+s,
+							rs.getString("floor"),
 							rs.getString("number_of_rooms"),
 							rs.getString("number_of_floors"),
 							rs.getString("square_meters"),

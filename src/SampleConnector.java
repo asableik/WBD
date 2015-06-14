@@ -41,12 +41,18 @@ public class SampleConnector {
 		ResultSet myRs = null;
 		try {
 			myStmt = dbConnection.createStatement();
-			String statement = "SELECT * FROM Esajur.Client c, Esajur.Property p WHERE c.person_id = '"+personID+"' AND "
-																					 + "(p.price BETWEEN c.price_min AND c.price_max) AND"
-																					 + "(p.square_meters BETWEEN c.sqm_min AND c.sqm_max) AND"
-																					 + "(p.rent_or_buy = c.rent_or_buy) AND "
-																					 + "(p.property_type = c.state) AND"
-																					 + "(p.floor BETWEEN c.floor_min AND c.floor_max)";
+			String statement = "SELECT p.property_id, p.property_type, p.price, p.number_of_rooms,"
+					+ "p.number_of_floors, p.square_meters,p.date_available,p.date_end, p.rent_or_buy, "
+					+ "p.property_type, p.floor,"
+					+ "a.street_name, a.house_number, a.flat_number,"
+					+ "cit.city_name"
+					+ " FROM Esajur.Client c, Esajur.Property p,Esajur.Address a, Esajur.City cit"
+					+ " WHERE c.person_id = '"+personID+"' AND "
+					+ "(p.price BETWEEN c.price_min AND c.price_max) AND"
+					+ "(p.square_meters BETWEEN c.sqm_min AND c.sqm_max) AND"
+				  	+ "(p.rent_or_buy = c.rent_or_buy) AND "
+				  	+ "(p.property_type = c.state) AND"
+				  	+ "(p.floor BETWEEN c.floor_min AND c.floor_max)";
 			System.out.println(statement);
 			myRs= myStmt.executeQuery(statement);
 		} catch (SQLException e) {

@@ -117,11 +117,12 @@ public class FindPropertyDialog extends JDialog{
 			ResultSet rs = sampleConnector.SelectOffers(""+(personT.getValueAt(personT.getSelectedRow(), 0)));
 			try {
 				while(rs.next()){
+					String s = rs.getString("flat_number") != null ? "/"+rs.getString("flat_number") : "";
 					propertyDTM.addRow(new Object[]{
 							rs.getString("property_id"), 		//id
 							rs.getString("property_type"),		//type
 							rs.getString("price"),
-							rs.getString("address_id"),
+							rs.getString("city_name")+" "+rs.getString("street_name")+" "+rs.getString("house_number")+s,
 							rs.getString("number_of_rooms"),
 							rs.getString("number_of_floors"),
 							rs.getString("square_meters"),

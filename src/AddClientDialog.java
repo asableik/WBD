@@ -14,6 +14,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
@@ -23,6 +24,9 @@ public class AddClientDialog extends AddPersonDialog {
 	JComboBox<String> stateCB;
 	JFormattedTextField priceMinTF, priceMaxTF, floorMinTF, floorMaxTF,sqmMinTF, sqmMaxTF;
 	JButton addB;
+	JComboBox<String> updatePicker;
+	JTextField updateTextField;
+	
 	int i = 3;
 	private JButton editB;
 	private JButton deleteB;
@@ -176,16 +180,42 @@ public class AddClientDialog extends AddPersonDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				sampleConnector.Update("Esajur.Client", updatePicker.getSelectedItem().toString(), updateTextField.getText(), "person_id", ""+personT.getValueAt(personT.getSelectedRow(), 0));
+				
 				editCancelB.setEnabled(false);
 				editOkB.setEnabled(false);
 				addB.setEnabled(true);
 				editB.setEnabled(true);
 				deleteB.setEnabled(true);
 				personT.setRowSelectionAllowed(true);
+				
+				populateTable();
 			}
 			
 		});
 		editOkB.setEnabled(false);
+		
+		
+		String[] updateValues = {"first_name",
+								 "last_name",
+								 "birth_date",
+								 "phone_number",
+								 "email_address",
+								 "price_min",
+								 "price_max",
+								 "state",
+								 "floor_min",
+								 "floor_max",
+								 "sqm_min",
+								 "sqm_max"
+				
+		};
+		updatePicker = new JComboBox<String>(updateValues);
+		
+		updateTextField = new JTextField();
+		
+		
+		
 		
 		deleteB = new JButton("Delete client");
 		deleteB.addActionListener(new ActionListener(){
@@ -222,6 +252,11 @@ public class AddClientDialog extends AddPersonDialog {
 		this.add(editB);
 		this.add(editCancelB,"split 2,al 100%");
 		this.add(editOkB,"wrap");
+		this.add(updatePicker,"growx,push");
+		this.add(updateTextField,"growx,push,wrap");
+		
+		
+		
 		this.add(deleteB,"wrap");
 		
 		this.add(tableSP,"width 600:700:,pushx, growx,east");

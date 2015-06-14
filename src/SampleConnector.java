@@ -87,12 +87,27 @@ public class SampleConnector {
 		Statement myStmt;
 		try {
 		myStmt = dbConnection.createStatement();
-		System.out.println("DELETE FROM "+table+" WHERE "+valueName+" = "+"'"+value+"'");
-		myStmt.executeUpdate("DELETE FROM "+table+" WHERE "+valueName+" = "+"'"+value+"'");
+		String statement = "DELETE FROM "+table+" WHERE "+valueName+" = "+"'"+value+"'";
+		System.out.println(statement);
+		myStmt.executeUpdate(statement);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public void Update(String table,String column, String newValue, String someColumn, String someValue){
+		Statement myStmt;
+		try {
+		myStmt = dbConnection.createStatement();
+		String statement = "UPDATE "+table+" SET "+column+" = "+"'"+newValue+"'"+" WHERE "+someColumn+" = '"+someValue+"'";
+		System.out.println(statement);
+		myStmt.executeUpdate(statement);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	public static void main(String[] args){
 		final SampleConnector sampleConnector = new SampleConnector();
